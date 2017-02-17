@@ -9,7 +9,7 @@ from distutils.core import setup
 
 setup(
     name="Flask-kinesis",
-    version="0.0.3",
+    version="0.1.2",
     py_modules=["flask_kinesis"],
     author="doyoung",
     author_email="iidd58" "@" "gmail.com",

@@ -4,6 +4,7 @@ import json
 from boto3.session import Session
 from Queue import Queue, Empty
 from datetime import datetime
+from flask import g
 
 
 class kinesis(object):
@@ -12,6 +13,7 @@ class kinesis(object):
         self.app = app
         if app is not None:
             self.init_app(app)
+            app.before_request(self.before_request)
             app.after_request(self.send_events)
 
             self.queue = Queue()
@@ -50,3 +52,6 @@ class kinesis(object):
             except Empty:
                 break
         return Response
+
+    def before_request(self):
+        g.events = self

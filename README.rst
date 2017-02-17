@@ -13,17 +13,14 @@ Usage
     from flask import Flask, g
     from flask_kinesis import kinesis
 
+    # credentials information can be omitted
 
     app = Flask(__name__)
     events = kinesis(app,
                      aws_access_key_id= "",
                      aws_access_secret_key= "",
-                     region= "",
+                     region_name= "",
                      StreamName="")
-
-    @app.before_request
-    def before_request():
-        g.events = events
 
     # ...
 
