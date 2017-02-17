@@ -1,5 +1,6 @@
 # coding: utf8
 import boto3
+import json
 from boto3.session import Session
 from Queue import Queue
 
@@ -23,9 +24,9 @@ class kinesis(object):
                         aws_secret_access_key=kwargs.get('aws_secret_access_key',
                                                          credentials.secret_key),
                         region=kwargs.get("region_name", Session().region_name)
-                    ),
-                    self.StreamName = kwargs['StreamName']
+                    )
                 )
+                self.StreamName = kwargs['StreamName']
             except:
                 raise TypeError("aws_access_key_id, aws_secret_access_key, region_name, StreamName")
 
@@ -36,12 +37,15 @@ class kinesis(object):
             app.teardown_request(self.send_events)
 
     def event(self, evt):
+        evt['when'] = {"timestamp": datetime.now().strfime("%s")}
         self.queue(evt)
 
     def send_events(self, exception):
         while True:
             try:
                 evt = self.queue.get_nowait()
+                self.kinesis.put_record(DeliceryStreamName=self.StreamName,
+                                        Record={"Data": json.dumps(evt)})
             except Empty:
                 break
         return Exception
