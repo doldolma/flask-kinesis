@@ -3,7 +3,6 @@ import boto3
 import json
 from boto3.session import Session
 from Queue import Queue, Empty
-from datetime import datetime
 from flask import g
 
 
@@ -40,17 +39,17 @@ class kinesis(object):
             app.teardown_request(self.send_events)
 
     def event(self, evt):
-        evt['when'] = {"timestamp": datetime.now().strftime("%s")}
         self.queue.put_nowait(evt)
 
     def send_events(self, Response):
         while True:
             try:
                 evt = self.queue.get_nowait()
-                self.kinesis.put_record(DeliveryStreamName=self.StreamName,
-                                        Record={"Data": json.dumps(evt)})
             except Empty:
                 break
+
+            self.kinesis.put_record(DeliveryStreamName=self.StreamName,
+                                    Record={"Data": json.dumps(evt)})
         return Response
 
     def before_request(self):
