@@ -15,7 +15,11 @@ Usage
 
 
     app = Flask(__name__)
-    events = kinesis(app)
+    events = kinesis(app,
+                     aws_access_key_id= "",
+                     aws_access_secret_key= "",
+                     region= "",
+                     StreamName="")
 
     @app.before_request
     def before_request():
