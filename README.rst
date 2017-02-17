@@ -5,12 +5,6 @@ Installation
 
     pip install Flask-kinesis
 
-Configuration
-=============
-
-Takes just one configuration setting, of ``EVENT_TAG_PREFIX``, which is prepended
-to the tag of all outgoing events.
-
 Usage
 =====
 
