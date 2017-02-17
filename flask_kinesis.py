@@ -1,5 +1,6 @@
 # coding: utf8
 import boto3
+from boto3.session import Session
 from Queue import Queue
 
 
@@ -12,14 +13,21 @@ class kinesis(object):
             app.after_request(self.send_events)
 
             self.queue = Queue()
+            credentials = Session().get_credentials()
             try:
-                self.kinesis = boto3.client('firehose',
-                                            aws_access_key_id=kwargs['aws_access_key_id'],
-                                            aws_secret_access_key=kwargs['aws_secret_access_key'],
-                                            region=kwargs['region'])
-                self.StreamName = kwargs['StreamName']
+                self.kinesis = boto3.client(
+                    'firehose',
+                    aws_access_key_id=kwargs.get(
+                        "aws_access_key_id",
+                        credentials.access_key,
+                        aws_secret_access_key=kwargs.get('aws_secret_access_key',
+                                                         credentials.secret_key),
+                        region=kwargs.get("region_name", Session().region_name)
+                    ),
+                    self.StreamName = kwargs['StreamName']
+                )
             except:
-                raise TypeError("aws_access_key_id, aws_secret_access_key, region, StreamName")
+                raise TypeError("aws_access_key_id, aws_secret_access_key, region_name, StreamName")
 
     def init_app(self, app):
         if hasattr(app, "teardown_appcontext"):
