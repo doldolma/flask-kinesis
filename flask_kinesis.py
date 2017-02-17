@@ -1,7 +1,6 @@
 # coding: utf8
 import boto3
-from flask import current_app, request
-from six.moves.queue import Empty, Queue
+from Queue import Queue
 
 
 class kinesis(object):

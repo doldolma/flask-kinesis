@@ -9,19 +9,18 @@ from distutils.core import setup
 
 setup(
     name="Flask-kinesis",
-    version="0.0.2",
+    version="0.0.3",
     py_modules=["flask_kinesis"],
     author="doyoung",
     author_email="iidd58" "@" "gmail.com",
-    url="https://github.com/iidd0101",
+    url="https://github.com/iidd0101/flask-kinesis",
     license="MIT",
     description="Flask plugin for aws kinesis",
     long_description=__doc__,
     platforms="any",
     install_requires=[
         "Flask",
-        "boto3",
-        "six"
+        "boto3"
     ],
     classifiers=[
         "Development Status :: 1 - Planning",
