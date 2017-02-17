@@ -2,7 +2,8 @@
 import boto3
 import json
 from boto3.session import Session
-from Queue import Queue
+from Queue import Queue, Empty
+from datetime import datetime
 
 
 class kinesis(object):
@@ -20,11 +21,11 @@ class kinesis(object):
                     'firehose',
                     aws_access_key_id=kwargs.get(
                         "aws_access_key_id",
-                        credentials.access_key,
-                        aws_secret_access_key=kwargs.get('aws_secret_access_key',
-                                                         credentials.secret_key),
-                        region=kwargs.get("region_name", Session().region_name)
-                    )
+                        credentials.access_key
+                    ),
+                    aws_secret_access_key=kwargs.get('aws_secret_access_key',
+                                                     credentials.secret_key),
+                    region_name=kwargs.get("region_name", Session().region_name)
                 )
                 self.StreamName = kwargs['StreamName']
             except:
@@ -37,15 +38,15 @@ class kinesis(object):
             app.teardown_request(self.send_events)
 
     def event(self, evt):
-        evt['when'] = {"timestamp": datetime.now().strfime("%s")}
-        self.queue(evt)
+        evt['when'] = {"timestamp": datetime.now().strftime("%s")}
+        self.queue.put_nowait(evt)
 
-    def send_events(self, exception):
+    def send_events(self, Response):
         while True:
             try:
                 evt = self.queue.get_nowait()
-                self.kinesis.put_record(DeliceryStreamName=self.StreamName,
+                self.kinesis.put_record(DeliveryStreamName=self.StreamName,
                                         Record={"Data": json.dumps(evt)})
             except Empty:
                 break
-        return Exception
+        return Response
