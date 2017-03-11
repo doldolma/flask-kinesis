@@ -48,8 +48,8 @@ class kinesis(object):
             except Empty:
                 break
 
-            self.kinesis.put_record(DeliveryStreamName=self.StreamName,
-                                    Record={"Data": json.dumps(evt)},
+            self.kinesis.put_record(StreamName=self.StreamName,
+                                    Data=json.dumps(evt),
                                     PartitionKey=str(hash(json.dumps(evt))))
         return Response
 
