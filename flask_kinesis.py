@@ -19,7 +19,7 @@ class kinesis(object):
             credentials = Session().get_credentials()
             try:
                 self.kinesis = boto3.client(
-                    'firehose',
+                    'kinesis',
                     aws_access_key_id=kwargs.get(
                         "aws_access_key_id",
                         credentials.access_key
@@ -49,7 +49,8 @@ class kinesis(object):
                 break
 
             self.kinesis.put_record(DeliveryStreamName=self.StreamName,
-                                    Record={"Data": json.dumps(evt)})
+                                    Record={"Data": json.dumps(evt)},
+                                    PartitionKey=str(hash(json.dumps(evt))))
         return Response
 
     def before_request(self):
