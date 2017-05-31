@@ -16,11 +16,11 @@ Usage
     # credentials information can be omitted
 
     app = Flask(__name__)
-    events = kinesis(app,
-                     aws_access_key_id= "",
-                     aws_access_secret_key= "",
-                     region_name= "",
-                     StreamName="")
+    kinesis(app,
+            aws_access_key_id= "",
+            aws_access_secret_key= "",
+            region_name= "",
+            StreamName="")
 
     # ...
 
