@@ -2,7 +2,7 @@
 import boto3
 import json
 from boto3.session import Session
-from Queue import Queue, Empty
+from queue import Queue, Empty
 from flask import g
 
 
