@@ -9,10 +9,10 @@ from distutils.core import setup
 
 setup(
     name="Flask-kinesis",
-    version="0.1.8",
+    version="0.1.9",
     py_modules=["flask_kinesis"],
     author="doyoung",
-    author_email="iidd58" "@" "gmail.com",
+    author_email="hdy3405" "@" "gmail.com",
     url="https://github.com/iidd0101/flask-kinesis",
     license="MIT",
     description="Flask plugin for aws kinesis stream",
