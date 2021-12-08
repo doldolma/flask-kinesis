@@ -13,7 +13,7 @@ setup(
     py_modules=["flask_kinesis"],
     author="doyoung",
     author_email="hdy3405" "@" "gmail.com",
-    url="https://github.com/iidd0101/flask-kinesis",
+    url="https://github.com/doldolma/flask-kinesis",
     license="MIT",
     description="Flask plugin for aws kinesis stream",
     long_description=__doc__,
